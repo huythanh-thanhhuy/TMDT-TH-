@@ -1,0 +1,354 @@
+/* Cart.css */
+:root {
+  --primary-color: #6f4e37;
+  --accent-color: #d2691e;
+  --bg-light: #f9f9f9;
+  --border-color: #e0e0e0;
+  --success-color: #27ae60;
+  --text-dark: #333;
+}
+
+.cart-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 20px;
+  font-family: 'Poppins', sans-serif;
+  min-height: 60vh; /* Giữ footer không bị nhảy lên giữa màn hình khi cart trống */
+}
+
+/* Header Title */
+.cart-header-title {
+  display: flex;
+  align-items: baseline;
+  gap: 15px;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 10px;
+}
+
+.cart-header-title h2 {
+  color: var(--primary-color);
+  margin: 0;
+}
+
+.item-count {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+/* Empty State */
+.empty-cart {
+  text-align: center;
+  padding: 4rem 0;
+  color: #888;
+}
+
+.empty-icon {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.sub-text {
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+/* Layout Content: Grid 2 columns */
+.cart-content {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 30px;
+}
+
+/* Cart Items List */
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s;
+}
+
+.cart-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.item-details h4 {
+  margin: 0 0 5px 0;
+  color: var(--text-dark);
+}
+
+.item-price {
+  margin: 0;
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.item-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Quantity Control */
+.quantity-control {
+  display: flex;
+  align-items: center;
+  background: var(--bg-light);
+  border-radius: 20px;
+  padding: 2px;
+}
+
+.qty-btn {
+  background: white;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--primary-color);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: all 0.2s;
+}
+
+.qty-btn:hover:not(:disabled) {
+  background: var(--primary-color);
+  color: white;
+}
+
+.qty-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.qty {
+  width: 30px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.item-total {
+  font-weight: bold;
+  color: var(--primary-color);
+  min-width: 80px;
+  text-align: right;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: #ff6b6b;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+}
+
+.remove-btn:hover {
+  background: #ffe5e5;
+}
+
+/* Cart Summary & Sidebar */
+.cart-sidebar {
+  position: relative;
+}
+
+.cart-summary {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 100px; /* Dính khi cuộn */
+}
+
+.cart-summary h3 {
+  margin-top: 0;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  color: #555;
+}
+
+.total-row {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: var(--text-dark);
+  margin-top: 15px;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 15px 0;
+}
+
+/* Actions */
+.checkout-btn {
+  width: 100%;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.3s;
+  margin-bottom: 10px;
+}
+
+.checkout-btn:hover {
+  background-color: #5a3e2b;
+}
+
+.clear-btn {
+  width: 100%;
+  background: transparent;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #777;
+  transition: all 0.2s;
+}
+
+.clear-btn:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+/* Form Styles */
+.checkout-form {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.checkout-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  box-sizing: border-box; /* Quan trọng để không bị vỡ layout */
+}
+
+.checkout-form input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(210, 105, 30, 0.1);
+}
+
+.form-actions-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.submit-btn {
+  flex: 2;
+  background-color: var(--success-color);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.submit-btn:disabled {
+  background-color: #a5d6a7;
+  cursor: wait;
+}
+
+.cancel-btn {
+  flex: 1;
+  background: #eee;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Success State */
+.success-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.order-success {
+  text-align: center;
+  background: white;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.success-icon {
+  color: var(--success-color);
+  margin-bottom: 20px;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cart-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .cart-sidebar {
+    position: static;
+  }
+  
+  .item-actions {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+}

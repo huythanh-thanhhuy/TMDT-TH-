@@ -1,0 +1,97 @@
+/* SearchBar.css */
+:root {
+  --primary-color: #6f4e37;
+  --bg-input: #f3f4f6;
+  --text-placeholder: #9ca3af;
+  --text-dark: #333;
+}
+
+.search-bar-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 400px; /* Giới hạn độ dài tối đa */
+  display: flex;
+  align-items: center;
+}
+
+/* Icon kính lúp bên trái */
+.search-icon-left {
+  position: absolute;
+  left: 12px;
+  color: var(--text-placeholder);
+  pointer-events: none; /* Để bấm xuyên qua icon vào input */
+  transition: color 0.2s;
+}
+
+/* Input chính */
+.search-input {
+  width: 100%;
+  padding: 10px 40px 10px 40px; /* Padding trái phải để tránh đè icon */
+  border: 1px solid transparent;
+  background-color: var(--bg-input);
+  border-radius: 50px; /* Bo tròn hoàn toàn (Pill shape) */
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  transition: all 0.2s ease;
+  font-family: inherit;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: var(--text-placeholder);
+}
+
+/* Hiệu ứng khi click vào ô tìm kiếm */
+.search-input:focus {
+  background-color: #fff;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(111, 78, 55, 0.1); /* Hiệu ứng tỏa sáng nhẹ */
+}
+
+/* Khi focus thì icon kính lúp đậm lên */
+.search-input:focus + .search-icon-left,
+.search-bar-wrapper:focus-within .search-icon-left {
+  color: var(--primary-color);
+}
+
+/* Khu vực icon bên phải (Loading / Clear) */
+.search-actions-right {
+  position: absolute;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+/* Hiệu ứng xoay tròn loading */
+.spinner-icon {
+  color: var(--primary-color);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Nút Clear (X) */
+.clear-btn {
+  background: #e5e7eb;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  transition: all 0.2s;
+}
+
+.clear-btn:hover {
+  background: #d1d5db;
+  color: #333;
+}

@@ -1,0 +1,225 @@
+/* ProductDetailPage.css */
+
+/* --- BƯỚC 1: XÓA BỎ ĐOẠN :root Ở ĐÂY --- */
+/* Để nó tự động lấy màu Nâu/Kem từ file App.css */
+
+.product-detail-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Back Button */
+.back-btn {
+  display: flex; align-items: center; gap: 8px;
+  background: none; border: none;
+  font-size: 1rem; font-weight: 600;
+  color: var(--text-gray); /* Lấy từ App.css */
+  cursor: pointer; margin-bottom: 20px;
+  padding: 8px 16px; border-radius: 30px;
+  transition: all 0.2s;
+}
+
+.back-btn:hover {
+  background-color: rgba(75, 54, 33, 0.1); /* Màu nâu nhạt khi hover */
+  color: var(--primary-color);
+  transform: translateX(-5px);
+}
+
+/* Main Layout Grid */
+.product-detail-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  margin-bottom: 60px;
+  
+  /* Nền trắng để nổi bật trên nền web màu Kem */
+  background: var(--bg-color); 
+  
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: var(--shadow); /* Bóng đổ nâu nhạt từ App.css */
+}
+
+/* Image Section */
+.image-wrapper {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  background: #fff;
+  padding-bottom: 100%;
+  height: 0;
+}
+
+.main-image {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.main-image:hover { transform: scale(1.05); }
+
+.badges-overlay {
+  position: absolute; top: 15px; right: 15px;  z-index: 2; display: flex; gap: 5px;
+}
+
+.badge {
+  padding: 12px 12px; border-radius: 20px;
+  font-size: 1rem; font-weight: bold; text-transform: uppercase;
+  color: white; box-shadow: 0 2px 5px rgba(230, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge.category { background-color: var(--primary-color)  ; }
+.badge.hot { background-color: var(--danger-color); }
+
+/* Info Section - Phần bên phải */
+.header-info {
+  border-bottom: 1px solid rgba(0,0,0,0.05); /* Viền mờ hơn */
+  padding-bottom: 15px; margin-bottom: 20px;
+}
+
+.product-name {
+  font-size: 2.5rem; color: var(--primary-color); /* Tên món màu Nâu đậm */
+  margin: 0 0 10px 0; line-height: 1.2;
+}
+
+.meta-tags {
+  display: flex; gap: 15px; align-items: center;
+  color: var(--text-gray); font-size: 0.95rem;
+}
+
+.meta-divider { color: #ddd; }
+
+.price-wrapper { margin-bottom: 25px; }
+
+.current-price {
+  font-size: 2rem; font-weight: 700;
+  color: var(--accent-color); /* Giá màu Cam đất */
+}
+
+/* Description */
+.description-box h3 {
+  font-size: 1.1rem; margin-bottom: 10px;
+  color: var(--text-dark);
+}
+
+.full-desc {
+  color: var(--text-gray); line-height: 1.6; margin-bottom: 30px;
+}
+
+/* Strength Bar */
+.strength-section { margin-bottom: 30px; }
+.strength-bars { display: flex; gap: 8px; }
+
+.bar-segment {
+  width: 40px; height: 8px;
+  background-color: #eee;
+  border-radius: 4px; transition: background 0.3s;
+}
+
+.bar-segment.filled {
+  background-color: var(--primary-color); /* Thanh sức mạnh màu Nâu */
+}
+
+/* --- ACTIONS & QUANTITY (ĐÃ CHỈNH SỬA) --- */
+.actions-container {
+  /* BỎ MÀU NỀN CŨ (bg-light cũ là màu xám) */
+  /* Thay bằng transparent (trong suốt) để trùng màu với khung chứa */
+  background-color: transparent; 
+  
+  /* Thêm viền mỏng để phân cách nhẹ nhàng thay vì dùng màu nền */
+  border: 1px solid rgba(0,0,0,0.05);
+  
+  padding: 20px;
+  border-radius: 12px;
+  display: flex; flex-direction: column; gap: 20px;
+}
+
+.quantity-wrapper label {
+  display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px;
+  color: var(--text-dark);
+}
+
+.qty-control {
+  display: flex; align-items: center; gap: 15px;
+  background: #fff; /* Nền trắng cho ô số lượng */
+  width: fit-content; padding: 5px 10px;
+  border-radius: 30px;
+  border: 1px solid #ddd; /* Viền mỏng */
+}
+
+.qty-control button {
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center;
+  color: var(--primary-color); /* Nút +/- màu nâu */
+  padding: 5px; transition: transform 0.1s;
+}
+
+.qty-control button:hover:not(:disabled) { transform: scale(1.2); }
+.qty-control button:disabled { opacity: 0.3; }
+
+.qty-display {
+  font-weight: 700; font-size: 1.1rem; min-width: 20px; text-align: center;
+  color: var(--text-dark);
+}
+
+.buttons-row { display: flex; gap: 15px; }
+
+/* Nút Add to Cart To */
+.add-cart-btn-large {
+  flex: 1;
+  background-color: var(--primary-color); /* Nâu đậm */
+  color: white; border: none; padding: 14px; border-radius: 10px;
+  font-size: 1rem; font-weight: 600;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+  transition: all 0.2s;
+  box-shadow: 0 4px 10px rgba(75, 54, 33, 0.3);
+}
+
+.add-cart-btn-large:hover:not(:disabled) {
+  background-color: var(--accent-color); /* Hover ra màu Cam */
+  transform: translateY(-2px);
+}
+
+/* Nút Wishlist */
+.wishlist-btn-large {
+  width: 54px; background: rgb(255, 255, 255);
+  border: 2px solid #b09b9b; border-radius: 10px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  color: #ccc; transition: all 0.2s;
+}
+
+.wishlist-btn-large:hover {
+  border-color: var(--danger-color); color: var(--danger-color);
+}
+
+.wishlist-btn-large.active {
+  border-color: var(--danger-color); color: var(--danger-color);
+  background-color: #fff0f0;
+}
+
+/* Loading & Error */
+.page-loading, .page-error {
+  min-height: 50vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 15px; color: var(--text-gray);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .product-detail-container {
+    grid-template-columns: 1fr; gap: 30px; padding: 20px;
+  }
+  .product-name { font-size: 1.8rem; }
+}

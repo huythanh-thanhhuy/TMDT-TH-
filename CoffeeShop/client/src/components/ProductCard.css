@@ -1,0 +1,157 @@
+/* ProductCard.css */
+:root {
+  --primary-color: #6f4e37;
+  --text-dark: #333;
+  --text-light: #666;
+  --card-bg: #fff;
+  --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
+  --shadow-md: 0 10px 15px rgba(0,0,0,0.1);
+}
+
+.product-card {
+  background-color: var(--card-bg);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Giúp các thẻ bằng nhau trong Grid */
+  border: 1px solid transparent;
+}
+
+.product-card:hover {
+  transform: translateY(-5px); /* Nhấc thẻ lên khi hover */
+  box-shadow: var(--shadow-md);
+  border-color: rgba(111, 78, 55, 0.2);
+}
+
+/* Image Section */
+.product-image-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 75%; /* Tỉ lệ khung hình 4:3 */
+  overflow: hidden;
+}
+
+.product-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Đảm bảo ảnh không bị méo */
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-img {
+  transform: scale(1.1); /* Zoom nhẹ ảnh khi hover */
+}
+
+/* Category Badge (Nằm đè lên ảnh) */
+.category-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  z-index: 2;
+}
+
+/* Content Section */
+.product-info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Đẩy footer xuống đáy */
+}
+
+.product-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0 0 8px 0;
+  font-family: 'Poppins', sans-serif;
+  
+  /* Cắt text nếu quá dài (1 dòng) */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-description {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  line-height: 1.4;
+  margin: 0 0 16px 0;
+  
+  /* Cắt text sau 2 dòng */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+/* Footer & Price */
+.product-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto; /* Luôn nằm dưới cùng */
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+/* Add Button */
+.add-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.add-btn:hover {
+  background-color: #5a3e2b; /* Màu tối hơn của primary */
+}
+
+.add-btn:active {
+  transform: scale(0.95);
+}
+
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 480px) {
+  .btn-text {
+    display: none; /* Ẩn chữ "Add" trên mobile, chỉ hiện icon + */
+  }
+  
+  .add-btn {
+    padding: 8px;
+    border-radius: 50%; /* Nút tròn trên mobile */
+    width: 36px;
+    height: 36px;
+    justify-content: center;
+  }
+}
