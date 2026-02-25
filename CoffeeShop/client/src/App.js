@@ -14,7 +14,7 @@ import './App.css';
 // Component Toast Notification nội bộ
 const Toast = ({ message, type, onClose }) => (
   <div className={`toast-notification ${type}`}>
-    {type === 'success' ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
+    {type === 'success' ? <CheckCircle size={20} color="#27ae60" /> : <AlertCircle size={20} color="#ff4757" />}
     <span>{message}</span>
     <button onClick={onClose} className="toast-close"><X size={16} /></button>
   </div>
@@ -28,8 +28,9 @@ function AppContent() {
   // UI States
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showCart, setShowCart] = useState(false);
   const [toast, setToast] = useState(null); // { message, type }
+
+  // SỬA LỖI GIỎ HÀNG: Đã xóa biến showCart vì giờ Cart có Route riêng
 
   // Search States
   const [searchResults, setSearchResults] = useState([]);
@@ -37,9 +38,8 @@ function AppContent() {
   
   const location = useLocation();
 
-  // Tự động đóng Cart và cuộn lên đầu khi chuyển trang
+  // Tự động cuộn lên đầu khi chuyển trang (đã bỏ setShowCart(false))
   useEffect(() => {
-    setShowCart(false);
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
@@ -74,11 +74,8 @@ function AppContent() {
     }
   };
 
-  // Cập nhật: Hỗ trợ thêm số lượng (quantity)
   const addToCart = async (productId, quantity = 1) => {
     try {
-      // Loop call tạm thời nếu backend chưa hỗ trợ param quantity
-      // Nếu backend hỗ trợ, hãy sửa body: { productId, quantity }
       let lastData;
       for (let i = 0; i < quantity; i++) {
         const response = await fetch('http://localhost:5000/api/cart', {
@@ -189,9 +186,9 @@ function AppContent() {
         />
       )}
 
+      {/* Đã gỡ bỏ prop onCartClick khỏi Header */}
       <Header 
         cartCount={cart.length} 
-        onCartClick={() => setShowCart(!showCart)}
         onSearch={handleSearch}
         wishlistCount={wishlist.length}
       />
@@ -205,24 +202,26 @@ function AppContent() {
           </div>
         ) : (
           <Routes>
+            {/* SỬA LỖI GIỎ HÀNG: Tách Route '/' và '/cart' */}
             <Route path="/" element={
-              showCart ? (
-                <Cart 
-                  cart={cart}
-                  onRemove={removeFromCart}
-                  onUpdateQuantity={updateQuantity}
-                  onClear={clearCart}
-                />
+              loading ? (
+                <div className="loading-state">
+                  <Loader2 className="spinner" size={48} />
+                  <p>Brewing your menu...</p>
+                </div>
               ) : (
-                loading ? (
-                  <div className="loading-state">
-                    <Loader2 className="spinner" size={48} />
-                    <p>Brewing your menu...</p>
-                  </div>
-                ) : (
-                  <ProductList products={products} onAddToCart={addToCart} />
-                )
+                <ProductList products={products} onAddToCart={addToCart} />
               )
+            } />
+
+            {/* ROUTE MỚI DÀNH CHO GIỎ HÀNG */}
+            <Route path="/cart" element={
+              <Cart 
+                cart={cart}
+                onRemove={removeFromCart}
+                onUpdateQuantity={updateQuantity}
+                onClear={clearCart}
+              />
             } />
 
             <Route path="/product/:id" element={

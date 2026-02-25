@@ -336,8 +336,21 @@ const coffeeProducts = [
     fullDescription: 'Trendy whipped coffee foam served over cold or hot milk.',
     origin: 'Korea',
     strength: 3
-  }
+  },
+  {
+    id: uuidv4(),
+    name: 'Brown Sugar Boba Milk',
+    category: 'specialty',
+    price: 2.50,
+    description: 'Brown Sugar Boba Milk',
+    // Ảnh: Espresso có kem tươi
+    image: 'https://images.unsplash.com/photo-1558857563-b371033873b8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YnViYmxlJTIwdGVhfGVufDB8fDB8fHww',
+    fullDescription: 'Brown Sugar Boba Milk.',
+    origin: 'Italy',
+    strength: 1
+  },
 ];
+
 
 // --- Fake storage variables ---
 let userCart = [];
@@ -483,7 +496,7 @@ app.delete('/api/cart', (req, res) => {
 
 // Create order (checkout)
 app.post('/api/orders', (req, res) => {
-  const { customerName, email } = req.body;
+  const { customerName, pickupTime } = req.body;
 
   if (userCart.length === 0) {
     return res.status(400).json({
@@ -496,7 +509,7 @@ app.post('/api/orders', (req, res) => {
     id: uuidv4(),
     orderId: `ORD-${Date.now()}`,
     customerName,
-    email,
+    pickupTime, // Lưu giờ lấy nước vào database tạm
     items: userCart,
     total: userCart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
     status: 'completed',

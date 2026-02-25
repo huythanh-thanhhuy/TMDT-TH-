@@ -1,46 +1,43 @@
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { ShoppingCart, Heart, FileText, Coffee } from 'lucide-react'; // Import icons
+import { ShoppingCart, Heart, FileText, Coffee } from 'lucide-react'; 
 import SearchBar from './SearchBar';
 import './Header.css';
 
-function Header({ cartCount, onCartClick, onSearch, wishlistCount }) {
+function Header({ cartCount, onSearch, wishlistCount }) {
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleSearch = (results, query) => {
-    if (query.trim()) {
-      navigate(`/search?q=${encodeURIComponent(query)}`, { state: { results, query } });
+    // 1. GỌI HÀM CỦA APP.JS ĐỂ CẬP NHẬT KẾT QUẢ (Chính là dòng bạn bị thiếu)
+    if (onSearch) {
+      onSearch(results, query);
     }
-  };
 
-  const handleCartClick = () => {
-    if (location.pathname !== '/') {
+    // 2. XỬ LÝ CHUYỂN TRANG
+    if (query.trim()) {
+      // Nếu có chữ -> Bay sang trang Search
+      navigate(`/search?q=${encodeURIComponent(query)}`);
+    } else if (location.pathname === '/search') {
+      // Nếu xóa trắng ô tìm kiếm -> Tự động quay về trang chủ
       navigate('/');
     }
-    onCartClick();
-  };
-
-  const handleLogoClick = (e) => {
-    navigate('/');
-    onCartClick();
   };
 
   return (
     <header className="header">
       <div className="header-container">
-        {/* Logo Section */}
-        <div className="logo" onClick={handleLogoClick}>
+        
+        <Link to="/" className="logo" style={{ textDecoration: 'none' }}>
           <Coffee className="logo-icon" size={32} />
           <h1>Coffee Shop</h1>
-        </div>
+        </Link>
 
-        {/* Search Section */}
         <div className="search-wrapper">
+          {/* Truyền hàm handleSearch mới vào SearchBar */}
           <SearchBar onSearch={handleSearch} />
         </div>
 
-        {/* Actions Section */}
         <div className="header-actions">
           
           <Link to="/wishlist" className="nav-btn" title="Wishlist">
@@ -54,12 +51,12 @@ function Header({ cartCount, onCartClick, onSearch, wishlistCount }) {
             <FileText size={24} />
           </Link>
 
-          <button className="nav-btn cart-btn" onClick={handleCartClick} title="Shopping Cart">
+          <Link to="/cart" className="nav-btn cart-btn" title="Shopping Cart">
             <div className="icon-wrapper">
               <ShoppingCart size={24} />
               {cartCount > 0 && <span className="badge">{cartCount}</span>}
             </div>
-          </button>
+          </Link>
           
         </div>
       </div>

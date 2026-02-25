@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Trash2, Plus, Minus, CheckCircle, Coffee, ArrowRight } from 'lucide-react';
+import { Trash2, Plus, Minus, CheckCircle, Coffee, ArrowRight, Clock } from 'lucide-react';
 import './Cart.css';
 
 function Cart({ cart, onRemove, onUpdateQuantity, onClear }) {
   const [showCheckout, setShowCheckout] = useState(false);
-  const [customerInfo, setCustomerInfo] = useState({ name: '', email: '' });
+  // ĐỔI: email thành pickupTime
+  const [customerInfo, setCustomerInfo] = useState({ name: '', pickupTime: '' });
   const [orderPlaced, setOrderPlaced] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false); // Thêm trạng thái loading
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Helper format tiền tệ
   const formatPrice = (price) => {
@@ -27,24 +28,22 @@ function Cart({ cart, onRemove, onUpdateQuantity, onClear }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           customerName: customerInfo.name,
-          email: customerInfo.email,
-          items: cart, // Nên gửi cả items lên server
+          pickupTime: customerInfo.pickupTime, // Gửi giờ lấy nước lên server
+          items: cart,
           total: grandTotal
         })
       });
 
       const data = await response.json();
-      
-      // Giả lập delay 1 xíu để thấy hiệu ứng loading (nếu api quá nhanh)
-      // await new Promise(r => setTimeout(r, 800)); 
 
-      if (data.success || response.ok) { // Check thêm response.ok cho chắc chắn
+      if (data.success || response.ok) { 
         setOrderPlaced(true);
         setShowCheckout(false);
-        setCustomerInfo({ name: '', email: '' });
         
+        // Chờ 3 giây rồi mới clear giỏ hàng và reset form
         setTimeout(() => {
           setOrderPlaced(false);
+          setCustomerInfo({ name: '', pickupTime: '' });
           onClear();
         }, 3000);
       }
@@ -63,7 +62,8 @@ function Cart({ cart, onRemove, onUpdateQuantity, onClear }) {
           <CheckCircle size={64} className="success-icon" />
           <h2>Order Placed Successfully!</h2>
           <p>Thank you, <b>{customerInfo.name}</b>.</p>
-          <p>Your coffee is brewing and will be ready soon!</p>
+          {/* Cập nhật thông báo hiển thị giờ lấy nước */}
+          <p>Your coffee will be ready for pickup at <b style={{ color: 'var(--primary-color)' }}><Clock size={16} style={{display: 'inline', verticalAlign: 'text-bottom'}} /> {customerInfo.pickupTime}</b>!</p>
         </div>
       </div>
     );
@@ -166,13 +166,14 @@ function Cart({ cart, onRemove, onUpdateQuantity, onClear }) {
                       required
                     />
                   </div>
+                  
+                  {/* ĐỔI: Ô nhập Email thành Chọn Giờ */}
                   <div className="form-group">
-                    <label>Email Address</label>
+                    <label>Pickup Time</label>
                     <input
-                      type="email"
-                      placeholder="e.g. john@example.com"
-                      value={customerInfo.email}
-                      onChange={(e) => setCustomerInfo({...customerInfo, email: e.target.value})}
+                      type="time"
+                      value={customerInfo.pickupTime}
+                      onChange={(e) => setCustomerInfo({...customerInfo, pickupTime: e.target.value})}
                       required
                     />
                   </div>
